@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "旗帜",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 1,
+    "bonus": 10
+  },
+  {
+    "id": 2,
+    "name": "海豚",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 2,
+    "bonus": 9
+  },
+  {
+    "id": 3,
+    "name": "蝙蝠",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 3,
+    "bonus": 8
+  },
+  {
+    "id": 4,
+    "name": "水手",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 4,
+    "bonus": 7
+  },
+  {
+    "id": 5,
+    "name": "星",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 5,
+    "bonus": 6
+  },
+  {
+    "id": 6,
+    "name": "风暴",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 6,
+    "bonus": 5
+  },
+  {
+    "id": 7,
+    "name": "闪电",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 7,
+    "bonus": 4
+  },
+  {
+    "id": 8,
+    "name": "长者",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 8,
+    "bonus": 3
+  },
+  {
+    "id": 9,
+    "name": "光速",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 9,
+    "bonus": 2
+  },
+  {
+    "id": 10,
+    "name": "十字军",
+    "score": 0,
+    "wins": 0,
+    "losses": 0,
+    "streak": 0,
+    "lastSeasonRank": 10,
+    "bonus": 1
+  }
+]
