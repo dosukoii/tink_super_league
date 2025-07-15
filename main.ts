@@ -81,11 +81,13 @@ function afterGameUpdate(teamA: Team, teamB: Team): void{
  * @param teams 
  * @returns schedule
  */
-function generateSchedule(teams: Team[]): [Team, Team][][]{
+function generateSchedule(teams: Team[],loop: number): [Team, Team][][]{
   const schedule: [Team, Team][][] = [];
   const n = teams.length;
   const half = n/2;
-  const rotated = [...teams];
+  const original = [...teams];
+  for(let l = 0; l < loop;l++){
+  const rotated = [...original];
   for(let i = 0;i < n-1;i++){
     const matches:[Team,Team][]=[];
     for(let j = 0; j < half; j++){
@@ -100,26 +102,25 @@ function generateSchedule(teams: Team[]): [Team, Team][][]{
     rest.unshift(rest.pop()!); // 右移一格
     rotated.splice(0, rotated.length, fixed, ...rest);
   }
+  }
   return schedule;
 }
 
 
-//TODO 改成可是实现两轮，以及潜在的每一轮显示
+//TODO 改成可实现两轮，以及潜在的每一轮显示
 /**
  * 每一轮的模拟
  * @param round 
  * @param teams 
  * @param schedule 
  */
-function oneRoundSimulation(round:number,teams:Team[],schedule:[Team,Team][][]):void{
+function oneRoundSimulation(round:number,schedule:[Team,Team][][]):void{
   const matches = schedule[round];
   for(const [teamA,teamB] of matches){
     afterGameUpdate(teamA,teamB);
   }
 }
 
-
-let round:number = 0;//单赛季内的轮次
 /**
  * 赛季模拟
  * @param teams 赛季开始之前的队伍表 
@@ -127,15 +128,15 @@ let round:number = 0;//单赛季内的轮次
  */
 async function oneSeasonSimulation(teams:Team[],loop:number){
   //生成对阵表
-  let schedule = generateSchedule(teams);
-  for(let i = 0;i<teams.length-1; i++){
-    oneRoundSimulation(i,teams,schedule);
+  let schedule = generateSchedule(teams,loop);
+  for(let i = 0;i<schedule.length; i++){
+    oneRoundSimulation(i,schedule);
     updateRank(teams);
   }
   console.log("本赛季结束");
   for(let i=0;i<teams.length;i++){
-    console.log(`${i}  ${teams[i].name}\x1b[31m 胜:${teams[i].wins}\x1b[0m\x1b[32m 负:${teams[i].losses}\x1b[0m   上赛季的排名:${teams[i].lastSeasonRank}  bonus:${teams[i].bonus};`);
-    teams[i].lastSeasonRank=i;
+    console.log(`${i+1}  ${teams[i].name}\x1b[31m 胜:${teams[i].wins}\x1b[0m\x1b[32m 负:${teams[i].losses}\x1b[0m   上赛季的排名:${teams[i].lastSeasonRank}  bonus:${teams[i].bonus};`);
+    teams[i].lastSeasonRank=i+1;
   }
   const answer = await ask("请输入'1'继续下赛季，否则游戏结束");
   console.log("你输入的是", answer);
@@ -157,7 +158,7 @@ function beforeSeasonRestart(teams:Team[]){
   }
 }
 
-oneSeasonSimulation(defaultTeams,2)
+oneSeasonSimulation(defaultTeams,4)
 
 
 

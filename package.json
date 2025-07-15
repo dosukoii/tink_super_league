@@ -1,6 +1,6 @@
 {
   "name": "tink_super_league",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "main": "index.js",
   "scripts": {
     "start": "ts-node main.ts",
@@ -13,7 +13,7 @@
     "league"
   ],
   "author": "lei",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "ts-node": "^10.9.2",
