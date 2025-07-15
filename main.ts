@@ -1,4 +1,4 @@
-import {randomInt} from 'crypto';
+
 import teamsData from './data/default.json'; 
 import { Team, TeamData } from './models/team';
 import * as readline from 'readline';
@@ -50,8 +50,8 @@ function updateRank(teams:Team[]): void{
  * @returns result
  */
 function gameSimulation(teamA: Team, teamB: Team): number{
-  const paramA = randomInt(0, 10)*teamA.bonus;
-  const paramB = randomInt(0, 10)*teamB.bonus;
+  const paramA = Math.random()*teamA.bonus;
+  const paramB = Math.random()*teamB.bonus;
   let result = 0;
   if (paramA >= paramB){
     result = 1;
