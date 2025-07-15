@@ -13,7 +13,7 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, 'dist', 'index.html'));
-  win.webContents.openDevTools(); // 如果你想打开调试工具，去掉注释
+  win.webContents.openDevTools(); // 如果想打开调试工具，去掉注释
 }
 
 app.whenReady().then(() => {

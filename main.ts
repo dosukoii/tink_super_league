@@ -97,6 +97,8 @@ function oneRoundSimulation(round:number,schedule:[Team,Team][][]):void{
  * @param loop 循环次数
  */
 async function oneSeasonSimulation(teams:Team[],loop:number){
+  //清空元素
+  clearLog('rank');
   //生成对阵表
   let schedule = generateSchedule(teams,loop);
   for(let i = 0;i<schedule.length; i++){
@@ -105,13 +107,9 @@ async function oneSeasonSimulation(teams:Team[],loop:number){
   }
   console.log("本赛季结束");
   for (let i = 0; i < teams.length; i++) {
-    logToPage(`${i + 1}. ${teams[i].name} - 胜场: ${teams[i].wins}`,'simulateOneSeason');
+    logToPage(`${i + 1}. ${teams[i].name} - 胜场: ${teams[i].wins}- 负场: ${teams[i].losses}- 上赛季排名: ${teams[i].lastSeasonRank}`,'rank');
     teams[i].lastSeasonRank=i+1;
   }
-  // for(let i=0;i<teams.length;i++){
-  //   console.log(`${i+1}  ${teams[i].name}\x1b[31m 胜:${teams[i].wins}\x1b[0m\x1b[32m 负:${teams[i].losses}\x1b[0m   上赛季的排名:${teams[i].lastSeasonRank}  bonus:${teams[i].bonus};`);
-  //   teams[i].lastSeasonRank=i+1;
-  // }
   teamList=[...teams];
     beforeSeasonRestart(teams);
   
@@ -145,5 +143,9 @@ function logToPage(msg: string,queryId: string) {
   if (resultDiv) resultDiv.innerHTML += msg + "<br>";
 }
 
+function clearLog(queryId: string) {
+  const resultDiv = document.getElementById(queryId);
+  if (resultDiv) resultDiv.innerHTML = "";
+}
 
 
