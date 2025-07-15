@@ -1,41 +1,13 @@
-
+import {trueRandomInt} from './src/utils/random';
 import teamsData from './data/default.json'; 
 import { Team, TeamData } from './models/team';
-import * as readline from 'readline';
-
-/**
- * 命令行输入封装
- * @param question 
- * @returns 
- */
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 /**
  * 主控制区
  */
 
 const defaultTeams: Team[] = (teamsData as TeamData[]).map(data => new Team(data));
-
-function ask(question: string): Promise<string> {
-  return new Promise(resolve => rl.question(question, resolve));
-}
-// async function main() {
-//   const answer = await ask("请输入内容：");
-//   console.log("你输入的是", answer);
-//   rl.close();
-//   console.log(teams[1].name);
-// }
-
-// main();
-
-// rl.question("这是一个测试",(answer)=>{
-//   console.log("你说的是："+answer);
-//   rl.close();
-// })
-
+let teamList:Team[]=[...defaultTeams];
 /**
  * 更新排名，分数高的在前
  */
@@ -50,8 +22,8 @@ function updateRank(teams:Team[]): void{
  * @returns result
  */
 function gameSimulation(teamA: Team, teamB: Team): number{
-  const paramA = Math.random()*teamA.bonus;
-  const paramB = Math.random()*teamB.bonus;
+  const paramA = trueRandomInt(0,10)*teamA.bonus;
+  const paramB = trueRandomInt(0,10)*teamB.bonus;
   let result = 0;
   if (paramA >= paramB){
     result = 1;
@@ -106,8 +78,6 @@ function generateSchedule(teams: Team[],loop: number): [Team, Team][][]{
   return schedule;
 }
 
-
-//TODO 改成可实现两轮，以及潜在的每一轮显示
 /**
  * 每一轮的模拟
  * @param round 
@@ -134,20 +104,23 @@ async function oneSeasonSimulation(teams:Team[],loop:number){
     updateRank(teams);
   }
   console.log("本赛季结束");
-  for(let i=0;i<teams.length;i++){
-    console.log(`${i+1}  ${teams[i].name}\x1b[31m 胜:${teams[i].wins}\x1b[0m\x1b[32m 负:${teams[i].losses}\x1b[0m   上赛季的排名:${teams[i].lastSeasonRank}  bonus:${teams[i].bonus};`);
+  for (let i = 0; i < teams.length; i++) {
+    logToPage(`${i + 1}. ${teams[i].name} - 胜场: ${teams[i].wins}`,'simulateOneSeason');
     teams[i].lastSeasonRank=i+1;
   }
-  const answer = await ask("请输入'1'继续下赛季，否则游戏结束");
-  console.log("你输入的是", answer);
-  if(answer === '1'){
-    //console.clear();
+  // for(let i=0;i<teams.length;i++){
+  //   console.log(`${i+1}  ${teams[i].name}\x1b[31m 胜:${teams[i].wins}\x1b[0m\x1b[32m 负:${teams[i].losses}\x1b[0m   上赛季的排名:${teams[i].lastSeasonRank}  bonus:${teams[i].bonus};`);
+  //   teams[i].lastSeasonRank=i+1;
+  // }
+  teamList=[...teams];
     beforeSeasonRestart(teams);
-    oneSeasonSimulation(teams,loop);
-  }
   
 }
 
+/**
+ * 赛季重置
+ * @param teams 
+ */
 function beforeSeasonRestart(teams:Team[]){
   for(let i=0;i<teams.length;i++){
     let team=teams[i];
@@ -157,8 +130,20 @@ function beforeSeasonRestart(teams:Team[]){
     team.bonus=teams.length-i;
   }
 }
+console.log('test');
+const btn = document.getElementById("simulateOneSeason");
+if (btn) {
+  btn.addEventListener("click", () => {
+    oneSeasonSimulation(teamList, 4);
+  });
+} else {
+  console.error("找不到 id 为 simulateOneSeason 的元素");
+}
 
-oneSeasonSimulation(defaultTeams,4)
+function logToPage(msg: string,queryId: string) {
+  const resultDiv = document.getElementById(queryId);
+  if (resultDiv) resultDiv.innerHTML += msg + "<br>";
+}
 
 
 

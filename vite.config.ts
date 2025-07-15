@@ -13,7 +13,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@models': '/models',
-      '@data': '/data'
+      '@data': '/data',
+      '@src':'/src'
     }
   }
 });
